@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vishnerford Building Supplies</title>
+
+  <!-- PayPal SDK -->
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=KES"></script>
+
+  <!-- Stripe JS -->
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <style>
+    :root { --accent:#2563eb; --text:#1e293b; --bg:#f8fafc; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+    header{padding:4rem 1rem;text-align:center;background:var(--accent);color:#fff}
+    header h1{font-size:2.3rem;margin-bottom:.6rem}
+    header p{max-width:36rem;margin:0 auto}
+    section{padding:3rem 1rem;max-width:1100px;margin:0 auto}
+    h2{text-align:center;margin-bottom:2rem}
+    .grid{display:grid;gap:1.6rem}
+    @media(min-width:700px){.grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}}
+    .card{background:#fff;border-radius:.8rem;padding:1.5rem;box-shadow:0 3px 8px rgba(0,0,0,.05);display:flex;flex-direction:column;justify-content:space-between}
+    .card h3{margin-bottom:.4rem;color:var(--accent)}
+    .price{font-weight:bold;margin:.4rem 0 1rem;font-size:1.1rem}
+    footer{background:#f1f5f9;padding:3rem 1rem;font-size:.9rem;color:#475569}
+    footer h4{margin-bottom:.6rem;color:var(--accent)}
+    footer ul{list-style:none;margin-bottom:1rem}
+    footer li{margin:.25rem 0}
+    a{color:var(--accent);text-decoration:none}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Vishnerford Building Supplies</h1>
+  <p>Gypsum, paints, insulation & complete building‑fitout materials delivered country‑wide.</p>
+</header>
+
+<!-- ================== PAYMENT METHOD SELECTION ================== -->
+<section id="payment-method">
+  <h2>Select Your Payment Method</h2>
+  <div>
+    <label for="paypal-method">
+      <input type="radio" id="paypal-method" name="payment-method" value="paypal" checked>
+      Pay with PayPal
+    </label>
+    <label for="stripe-method">
+      <input type="radio" id="stripe-method" name="payment-method" value="stripe">
+      Pay with Bank Card (Stripe)
+    </label>
+  </div>
+</section>
+
+<!-- ================== PRODUCTS ================== -->
+<section id="products">
+  <h2>Featured Products</h2>
+  <div class="grid">
+
+    <!-- Gypsum Track Profile 52 mm -->
+    <div class="card">
+      <div>
+        <h3>Gypsum Track Profile 52mm</h3>
+        <p>Galvanized track for partition framing. Length: 10 ft.</p>
+        <p class="price"><del>KSh 140</del> KSh 135</p>
+        <button>Add to cart</button>
+      </div>
+
+      <!-- PayPal Button -->
+      <div id="pp-track52"></div>
+
+      <!-- Stripe Payment Form -->
+      <form id="payment-form-track52" style="display:none;">
+        <div id="card-element-track52"></div>
+        <button type="submit">Pay with Card</button>
+        <div id="error-message-track52"></div>
+      </form>
+    </div>
+
+    <!-- Gypsum Stud 52mm -->
+    <div class="card">
+      <div>
+        <h3>Gypsum Stud 52mm × 10ft</h3>
+        <p>Light‑gauge steel stud for ceilings & drywall.</p>
+        <p class="price"><del>KSh 135</del> KSh 130</p>
+        <button>Add to cart</button>
+      </div>
+
+      <!-- PayPal Button -->
+      <div id="pp-stud52"></div>
+
+      <!-- Stripe Payment Form -->
+      <form id="payment-form-stud52" style="display:none;">
+        <div id="card-element-stud52"></div>
+        <button type="submit">Pay with Card</button>
+        <div id="error-message-stud52"></div>
+      </form>
+    </div>
+
+    <!-- Gypsum Steel Stud 55mm -->
+    <div class="card">
+      <div>
+        <h3>Gypsum Steel Stud 55mm × 10ft</h3>
+        <p>Extra‑rigid stud for higher partitions.</p>
+        <p class="price"><del>KSh 155</del> KSh 150</p>
+        <button>Add to cart</button>
+      </div>
+
+      <!-- PayPal Button -->
+      <div id="pp-stud55"></div>
+
+      <!-- Stripe Payment Form -->
+      <form id="payment-form-stud55" style="display:none;">
+        <div id="card-element-stud55"></div>
+        <button type="submit">Pay with Card</button>
+        <div id="error-message-stud55"></div>
+      </form>
+    </div>
+
+    <!-- Gypsum Filler 25kg -->
+    <div class="card">
+      <div>
+        <h3>Gyproc Gypsum Filler 25kg</h3>
+        <p>Smooth finishing compound for joints & skim coat.</p>
+        <p class="price">KSh 1850</p>
+        <button>Add to cart</button>
+      </div>
+
+      <!-- PayPal Button -->
+      <div id="pp-filler"></div>
+
+      <!-- Stripe Payment Form -->
+      <form id="payment-form-filler" style="display:none;">
+        <div id="card-element-filler"></div>
+        <button type="submit">Pay with Card</button>
+        <div id="error-message-filler"></div>
+      </form>
+    </div>
+
+    <!-- Steel Nails 1" -->
+    <div class="card">
+      <div>
+        <h3>Steel Nails 1" (1kg)</h3>
+        <p>Hardened nails for track fixing.</p>
+        <p class="price">KSh 300</p>
+        <button>Add to cart</button>
+      </div>
+
+      <!-- PayPal Button -->
+      <div id="pp-nails"></div>
+
+      <!-- Stripe Payment Form -->
+      <form id="payment-form-nails" style="display:none;">
+        <div id="card-element-nails"></div>
+        <button type="submit">Pay with Card</button>
+        <div id="error-message-nails"></div>
+      </form>
+    </div>
+
+    <!-- Gypsum Screws 25mm -->
+    <div class="card">
+      <div>
+        <h3>Gypsum Screws 25mm (1kg)</h3>
+        <p>Bugle‑head drywall screws, black‑phosphate.</p>
+        <p class="price">KSh 550</p>
+        <button>Add to cart</button>
+      </div>
+
+      <!-- PayPal Button -->
+      <div id="pp-screws"></div>
+
+      <!-- Stripe Payment Form -->
+      <form id="payment-form-screws" style="display:none;">
+        <div id="card-element-screws"></div>
+        <button type="submit">Pay with Card</button>
+        <div id="error-message-screws"></div>
+      </form>
+    </div>
+
+    <!-- Gypsum Fiber Tape 90m -->
+    <div class="card">
+      <div>
+        <h3>Gypsum Fiber Tape 90m</h3>
+        <p>Self‑adhesive joint tape for crack‑free finishing.</p>
+        <p class="price">KSh 350</p>
+        <button>Add to cart</button>
+      </div>
+
+      <!-- PayPal Button -->
+      <div id="pp-tape"></div>
+
+      <!-- Stripe Payment Form -->
+      <form id="payment-form-tape" style="display:none;">
+        <div id="card-element-tape"></div>
+        <button type="submit">Pay with Card</button>
+        <div id="error-message-tape"></div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================== FOOTER NAVIGATION ================== -->
+<footer>
+  <div style="display:grid;gap:2rem;max-width:1100px;margin:0 auto"
+       class="grid">
+    <div>
+      <h4>Let Us Help</h4>
+      <ul>
+        <li><a href="#">My Account</a></li>
+        <li><a href="#">Refunds & Returns</a></li>
+        <li><a href="#">Order Tracking</a></li>
+        <li><a href="#">Shipping Policy</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Product Categories</h4>
+      <ul>
+        <li><a href="#">Gypsum Boards</a></li>
+        <li><a href="#">Drywall Metal Profiles</a></li>
+        <li><a href="#">Ceiling Cornices</a></li>
+        <li><a href="#">Insulation Materials</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Solutions</h4>
+      <ul>
+        <li><a href="#">Home Ceilings</a></li>
+        <li><a href="#">Offices</a></li>
+        <li><a href
